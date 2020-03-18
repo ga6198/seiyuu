@@ -4,37 +4,12 @@ import 'package:seiyuu/util/constants.dart';
 import 'package:seiyuu/util/decoration.dart';
 
 class SeiyuuCard extends StatelessWidget {
-  const SeiyuuCard({Key key}) : super(key: key);
+  final VoidCallback onTap;
+
+  const SeiyuuCard({Key key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    /*return FlutterShine(
-      builder: (BuildContext context, ShineShadow shineShadow) {
-        return Padding(
-          padding: EdgeInsets.all(10),
-          child: Container(
-            decoration: BoxDecoration(
-              //border: Border.all(color: Colors.red, width: 1.5),
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(Constants.BORDER_RADIUS),
-              boxShadow: shineShadow.boxShadows,
-            ),
-            height: Constants.CARD_IMAGE_HEIGHT,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                buildImage(),
-                Expanded(
-                  child: buildInfo(context),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-    */
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10), //EdgeInsets.all(10),
       //Align and SizedBox needed to keep shape when placed inside Expanded widget
@@ -60,7 +35,9 @@ class SeiyuuCard extends StatelessWidget {
               child: InkWell(
                 //splashColor: Colors.blueGrey,
                 onTap: () {
-                  print("test");
+                  print("Seiyuu Card Tapped");
+                  //call the passed in function, which opens seiyuu details
+                  onTap();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,

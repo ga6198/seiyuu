@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seiyuu/screens/seiyuu_details.dart';
 import 'package:seiyuu/util/decoration.dart';
 import 'package:seiyuu/widgets/drawer_only.dart';
 import 'package:seiyuu/widgets/search_bar.dart';
@@ -34,7 +35,18 @@ class _SeiyuuProfilesState extends State<SeiyuuProfiles> {
             Expanded(
               child: ListView(
                 children: <Widget>[
-                  SeiyuuCard(),
+                  SeiyuuCard(onTap: () {
+                    print("Opening Card's Info");
+                    //Move to the seiyuu details page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SeiyuuDetails(
+                          seiyuuName: "Aimi",
+                        ),
+                      ),
+                    );
+                  }),
                   SeiyuuCard(),
                   //SeiyuuCard(),
                 ],
