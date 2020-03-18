@@ -71,10 +71,8 @@ class SeiyuuCard extends StatelessWidget {
     );*/
     return ClipRRect(
         borderRadius: BorderRadius.only(
-          topLeft:
-              Radius.circular(0), //Radius.circular(Constants.BORDER_RADIUS),
-          bottomLeft:
-              Radius.circular(0), //Radius.circular(Constants.BORDER_RADIUS),
+          topLeft: Radius.circular(Constants.BORDER_RADIUS),
+          bottomLeft: Radius.circular(Constants.BORDER_RADIUS),
         ),
         child: Container(
           height: Constants.CARD_IMAGE_HEIGHT,
