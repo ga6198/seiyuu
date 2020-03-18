@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:seiyuu/util/constants.dart';
+import 'package:seiyuu/util/decoration.dart';
 
 class SeiyuuCard extends StatelessWidget {
   const SeiyuuCard({Key key}) : super(key: key);
@@ -36,43 +37,41 @@ class SeiyuuCard extends StatelessWidget {
     */
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10), //EdgeInsets.all(10),
-      child: Container(
-        decoration: BoxDecoration(
-          //border: Border.all(color: Colors.red, width: 1.5),
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(Constants.BORDER_RADIUS),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 6.0, // has the effect of softening the shadow
-              //spreadRadius: 1.0, // has the effect of extending the shadow
-              offset: Offset(
-                0.0, // horizontal, move right 0
-                3.0, // vertical, move down 3
-              ),
+      //Align and SizedBox needed to keep shape when placed inside Expanded widget
+      child: Align(
+        alignment: Alignment.center,
+        child: SizedBox(
+          height: Constants.CARD_IMAGE_HEIGHT,
+          width: 330,
+          child: Container(
+            decoration: BoxDecoration(
+              //border: Border.all(color: Colors.red, width: 1.5),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(Constants.BORDER_RADIUS),
+              boxShadow: standardShadow(),
             ),
-          ],
-        ),
-        height: Constants.CARD_IMAGE_HEIGHT,
-        width: 330, //MediaQuery.of(context).size.width * 0.9,
-        //Add a material so the inkwell splash appears on top
-        child: Material(
-          borderRadius:
-              BorderRadius.all(Radius.circular(Constants.BORDER_RADIUS)),
-          color: Colors.transparent,
-          child: InkWell(
-            //splashColor: Colors.blueGrey,
-            onTap: () {
-              print("test");
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                buildImage(),
-                Expanded(
-                  child: buildInfo(context),
+            height: Constants.CARD_IMAGE_HEIGHT,
+            width: 330, //MediaQuery.of(context).size.width * 0.9,
+            //Add a material so the inkwell splash appears on top
+            child: Material(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(Constants.BORDER_RADIUS)),
+              color: Colors.transparent,
+              child: InkWell(
+                //splashColor: Colors.blueGrey,
+                onTap: () {
+                  print("test");
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    buildImage(),
+                    Expanded(
+                      child: buildInfo(context),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

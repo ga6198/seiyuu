@@ -23,7 +23,7 @@ class Constants {
       color: tertiaryColor,
       elevation: 4,
       textTheme: TextTheme(
-        headline1: TextStyle(
+        headline6: TextStyle(
           color: Colors.black,
           fontSize: 30.0,
           fontWeight: FontWeight.w800,
