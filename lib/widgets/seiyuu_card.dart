@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:seiyuu/util/constants.dart';
 import 'package:seiyuu/util/decoration.dart';
+import 'package:seiyuu/util/seiyuu.dart';
 
 class SeiyuuCard extends StatelessWidget {
+  final Seiyuu seiyuu;
   final VoidCallback onTap;
 
-  const SeiyuuCard({Key key, this.onTap}) : super(key: key);
+  const SeiyuuCard({Key key, @required this.seiyuu, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

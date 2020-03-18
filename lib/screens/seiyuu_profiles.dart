@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:seiyuu/screens/seiyuu_details.dart';
 import 'package:seiyuu/util/decoration.dart';
@@ -32,6 +33,7 @@ class _SeiyuuProfilesState extends State<SeiyuuProfiles> {
           children: <Widget>[
             SearchBar(),
             //SeiyuuCard(),
+
             Expanded(
               child: ListView(
                 children: <Widget>[
@@ -52,9 +54,6 @@ class _SeiyuuProfilesState extends State<SeiyuuProfiles> {
                 ],
               ),
             ),
-            /*SeiyuuCard(),
-            SeiyuuCard(),
-            SeiyuuCard(),*/
           ],
         ),
       ),
