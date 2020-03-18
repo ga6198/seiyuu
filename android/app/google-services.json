@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "965399882461",
+    "firebase_url": "https://seiyuu-ccdf8.firebaseio.com",
+    "project_id": "seiyuu-ccdf8",
+    "storage_bucket": "seiyuu-ccdf8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965399882461:android:6edad68a9df0e54e950934",
+        "android_client_info": {
+          "package_name": "com.example.seiyuu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965399882461-o93abegeio9jde9jid0hmr6oirkk5rob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQY7VkZBl3d3PPvDehAeXZdTxtGDUPl7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965399882461-o93abegeio9jde9jid0hmr6oirkk5rob.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
