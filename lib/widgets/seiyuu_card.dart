@@ -33,17 +33,11 @@ class SeiyuuCard extends StatelessWidget {
             width:
                 Constants.CARD_WIDTH, //MediaQuery.of(context).size.width * 0.9,
             //Add a material so the inkwell splash appears on top
-            child: Material(
-              borderRadius: standardBorderRadius(),
-              color: Colors.transparent,
-              child: InkWell(
-                //splashColor: Colors.blueGrey,
-                onTap: () {
-                  print("Seiyuu Card Tapped");
-                  //call the passed in function, which opens seiyuu details
-                  onTap();
-                },
-                child: Row(
+            child:
+                //Stack added so Inkwell can display over the card
+                Stack(
+              children: <Widget>[
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     buildImage(),
@@ -52,7 +46,20 @@ class SeiyuuCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
+                //Material widget wrapper needed for Inkwell to show
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: standardBorderRadius(),
+                    //splashColor: Theme.of(context).accentColor, //Colors.blueGrey,
+                    onTap: () {
+                      print("Seiyuu Card Tapped");
+                      //call the passed in function, which opens seiyuu details
+                      onTap();
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ),
