@@ -45,6 +45,8 @@ class _SeiyuuDetailsState extends State<SeiyuuDetails> {
                   buildActionButtons(),
                   buildInfoTile(Constants.ICON_BIRTHDAY, "Birthday",
                       widget.seiyuu.birthday),
+                  buildInfoTile(Constants.ICON_BIRTHPLACE, "Birthplace",
+                      widget.seiyuu.birthplace['name']),
                   buildInfoTile(
                       Constants
                           .ICONS_ZODIAC["${widget.seiyuu.astrologicalSign}"],
@@ -56,6 +58,8 @@ class _SeiyuuDetailsState extends State<SeiyuuDetails> {
                       "${widget.seiyuu.height} cm"),
                   buildInfoTile(
                       Constants.ICON_AGENCY, "Agency", widget.seiyuu.agency),
+                  buildInfoTile(Constants.ICON_ROLES, "Roles",
+                      widget.seiyuu.roles.getBulletedStrings()),
                 ],
               ),
             ),
@@ -89,7 +93,7 @@ class _SeiyuuDetailsState extends State<SeiyuuDetails> {
 
   Widget buildInfoTile(IconData iconData, String title, String subtitle) {
     //if the seiyuu gave a value, build the tile
-    if (subtitle != null && subtitle != "null") {
+    if (subtitle != null && subtitle != "null" && subtitle != "") {
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         child: Container(

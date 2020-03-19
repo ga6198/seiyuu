@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:seiyuu/util/roles.dart';
 
 class Seiyuu {
   String agency;
   String astrologicalSign;
   String birthday; //DateTime birthday; //Timestamp birthday;
-  Map<String, dynamic> birthplace;
+  Map<String, dynamic>
+      birthplace; //includes location (Geopoint) and name (String)
   String bloodType;
   String gender;
   double height;
@@ -13,7 +15,8 @@ class Seiyuu {
   String kanaName;
   String kanjiName;
   String name;
-  List<String> roles;
+  Roles roles;
+  //List<Map<String, dynamic>> roles; //contains a map, which holds "character" (String) and "work" (String)
 
   Seiyuu(DocumentSnapshot doc) {
     this.agency = doc["agency"];
@@ -25,17 +28,33 @@ class Seiyuu {
     DateTime birthdayDate = DateTime.parse(time.toDate().toString());
     this.birthday = dateFormat.format(birthdayDate);
 
-    this.birthplace =
-        doc["birthplace"]; //inclues location (Geopoint) and name (String)
+    if (doc["birthplace"] != null) {
+      this.birthplace =
+          doc["birthplace"]; //includes location (Geopoint) and name (String)
+    }
+    //Calling map values on a null will break, so set birthplace to a map with no value if no birthplace is in the database
+    else {
+      this.birthplace = Map<String, dynamic>();
+    }
 
     this.bloodType = doc["bloodType"];
     this.gender = doc["gender"];
     this.height = doc["height"].toDouble();
-    this.imageUrls = List.from(doc["imageUrls"]);
+
+    //wrap with this if statement when using List.from().
+    if (doc["imageUrls"] != null) {
+      this.imageUrls = List.from(doc["imageUrls"]);
+    }
     this.kanaName = doc["kanaName"];
     this.kanjiName = doc["kanjiName"];
     this.name = doc["name"];
-    //this.roles = List.from(doc["roles"]);
+
+    if (doc["roles"] != null) {
+      List<Map<String, dynamic>> rolesList = List.from(doc["roles"]);
+      this.roles = Roles.fromList(rolesList);
+    } else {
+      this.roles = Roles();
+    }
 
     print("Initialized Seiyuu object with the following values:");
     printInfo();
@@ -60,8 +79,12 @@ class Seiyuu {
     print("Name: ${name}");
 
     print("Roles:");
-    /*roles.forEach((role) {
-      print(role);
-    });*/
+    if (roles != null) {
+      roles.printInfo();
+      /*roles.forEach((role) {
+        print(role);
+      });*/
+
+    }
   }
 }
