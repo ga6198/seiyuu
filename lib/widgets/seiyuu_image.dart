@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:seiyuu/util/constants.dart';
 import 'package:seiyuu/util/decoration.dart';
+import 'package:seiyuu/widgets/image_dialog.dart';
 
 class SeiyuuImage extends StatelessWidget {
   final String imageUrl;
@@ -41,8 +41,11 @@ class SeiyuuImage extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               borderRadius: standardBorderRadius(),
-              onTap: () {
-                print("Image tapped");
+              onTap: () async {
+                await showDialog(
+                  context: context,
+                  child: ImageDialog(imageUrl),
+                );
               },
             ),
           ),

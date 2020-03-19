@@ -19,16 +19,27 @@ class Roles {
   String getBulletedStrings() {
     String bulletedList = "";
 
-    roles.forEach((role) {
-      bulletedList += getBulletedString(role);
+    roles.asMap().forEach((index, role) {
+      //if last index, don't add a new line
+      if (index == role.length - 1) {
+        bulletedList += getBulletedString(role, withNewLine: false);
+      } else {
+        bulletedList += getBulletedString(role);
+      }
     });
 
+    print("BulletedList: ${bulletedList}");
     return bulletedList;
   }
 
   //prints the character and work, with a bullet point in front
-  String getBulletedString(Map<String, dynamic> role) {
-    return "• ${role['character']} (${role['work']})\n";
+  String getBulletedString(Map<String, dynamic> role,
+      {bool withNewLine = true}) {
+    if (withNewLine) {
+      return "• ${role['character']} (${role['work']})\n";
+    } else {
+      return "• ${role['character']} (${role['work']})";
+    }
   }
 
   //print out the roles for debugging
