@@ -31,7 +31,10 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
           items: widget.imageUrls.map(
             (url) {
               //The image in the carousel
-              return SeiyuuImage(imageUrl: url);
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 3),
+                child: SeiyuuImage(imageUrl: url),
+              );
             },
           ).toList(), //child,
           autoPlay: true,
@@ -43,6 +46,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
             });
           },
         ),
+
         //The indicator circles
         Positioned(
           //top: 0.0,
