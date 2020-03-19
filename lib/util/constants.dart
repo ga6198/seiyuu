@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Constants {
-  static String appName = "STOW";
+  static String appName = "Seiyuu";
 
   //Colors for theme
   static const Color mainPrimary = Color(0xfff5f5f5); //light grey
@@ -20,7 +21,7 @@ class Constants {
     secondaryHeaderColor: tertiaryColor,
     fontFamily: "Segoe UI",
     appBarTheme: AppBarTheme(
-      color: tertiaryColor,
+      color: mainBG, //tertiaryColor,
       elevation: 4,
       textTheme: TextTheme(
         headline6: TextStyle(
@@ -58,14 +59,27 @@ class Constants {
       TextStyle(fontSize: DIALOG_BUTTON_TEXT_SIZE);
 
   //icons used in the application
-  static const IconData ITEM_NAME_ICON = Icons.move_to_inbox;
-  static const IconData PRICE_ICON = Icons.attach_money;
-  static const IconData WEIGHT_ICON = Icons.fitness_center;
-  static const IconData DESCRIPTION_ICON = Icons.description;
-  static const IconData PHONE_NUMBER_ICON = Icons.phone_iphone;
-  static const IconData PERSON_NAME_ICON = Icons.person;
-  static const IconData STATUS_ICON = Icons.local_shipping;
-  static const IconData DATE_ICON = Icons.date_range;
+  static const IconData ICON_BIRTHDAY = Icons.cake;
+  static const IconData ICON_BLOOD_TYPE = MdiIcons.water;
+  static const IconData ICON_HEIGHT = MdiIcons.humanMaleHeight;
+  static const IconData ICON_AGENCY = MdiIcons.briefcase;
+  static const IconData ICON_ROLES = Icons.star;
+  static const IconData ICON_BIRTHPLACE = Icons.location_on;
+
+  static const Map ICONS_ZODIAC = {
+    'Aries': MdiIcons.zodiacAries,
+    'Taurus': MdiIcons.zodiacTaurus,
+    'Gemini': MdiIcons.zodiacGemini,
+    'Cancer': MdiIcons.zodiacCancer,
+    'Leo': MdiIcons.zodiacLeo,
+    'Virgo': MdiIcons.zodiacVirgo,
+    'Libra': MdiIcons.zodiacLibra,
+    'Scorpio': MdiIcons.zodiacScorpio,
+    'Sagittarius': MdiIcons.zodiacSagittarius,
+    'Capricorn': MdiIcons.zodiacCapricorn,
+    'Aquarius': MdiIcons.zodiacAquarius,
+    'Pisces': MdiIcons.zodiacPisces,
+  };
 
   //--------Image Settings--------//
   //max image width/height
@@ -74,6 +88,7 @@ class Constants {
 
   static const double CARD_IMAGE_WIDTH = 135;
   static const double CARD_IMAGE_HEIGHT = 180;
+  static const double CARD_WIDTH = 330;
 
   //firebase storage folder names
   static const String USER_FOLDER_NAME = 'users';

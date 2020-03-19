@@ -20,10 +20,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  cached_network_image: ^2.0.0
+  carousel_slider: ^1.4.1
   cloud_firestore: ^0.13.4+2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
+  getflutter: ^1.0.10
 
   # flutter_shine: ^0.0.5 # beautiful shadows
   material_design_icons_flutter: ^4.0.5045 #custom icons

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:seiyuu/util/constants.dart';
@@ -20,7 +21,7 @@ class SeiyuuCard extends StatelessWidget {
         alignment: Alignment.center,
         child: SizedBox(
           height: Constants.CARD_IMAGE_HEIGHT,
-          width: 330,
+          width: Constants.CARD_WIDTH,
           child: Container(
             decoration: BoxDecoration(
               //border: Border.all(color: Colors.red, width: 1.5),
@@ -29,11 +30,11 @@ class SeiyuuCard extends StatelessWidget {
               boxShadow: standardShadow(),
             ),
             height: Constants.CARD_IMAGE_HEIGHT,
-            width: 330, //MediaQuery.of(context).size.width * 0.9,
+            width:
+                Constants.CARD_WIDTH, //MediaQuery.of(context).size.width * 0.9,
             //Add a material so the inkwell splash appears on top
             child: Material(
-              borderRadius:
-                  BorderRadius.all(Radius.circular(Constants.BORDER_RADIUS)),
+              borderRadius: standardBorderRadius(),
               color: Colors.transparent,
               child: InkWell(
                 //splashColor: Colors.blueGrey,
@@ -83,9 +84,19 @@ class SeiyuuCard extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage(
-                "assets/images/hibiki_aimi.jpg",
+              //give the first network image as the main one
+              image: CachedNetworkImageProvider(
+                seiyuu.imageUrls[0],
+                errorListener: () {
+                  print("Could not load image for ${seiyuu.name}");
+                },
               ),
+              /*NetworkImage(
+                seiyuu.imageUrls[0],
+              ), */
+              /*AssetImage(
+                "assets/images/hibiki_aimi.jpg",
+              ),*/
             ),
           ),
         )
@@ -117,7 +128,7 @@ class SeiyuuCard extends StatelessWidget {
         //The top right bar with the seiyuu name
         Container(
           height: 50,
-          width: 330 -
+          width: Constants.CARD_WIDTH -
               Constants
                   .CARD_IMAGE_WIDTH, //MediaQuery.of(context).size.width * 0.9 - Constants.CARD_IMAGE_WIDTH,
           decoration: BoxDecoration(
@@ -133,14 +144,14 @@ class SeiyuuCard extends StatelessWidget {
               children: <Widget>[
                 //Name in English
                 Text(
-                  "Name Placeholder",
+                  "${seiyuu.name}",
                   style: TextStyle(fontSize: 20),
                 ),
                 //Name in original characters (kana/kanji)
                 Opacity(
                   opacity: 0.75,
                   child: Text(
-                    "Kana Name",
+                    "${seiyuu.kanjiName} (${seiyuu.kanaName})",
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
@@ -149,13 +160,13 @@ class SeiyuuCard extends StatelessWidget {
           ),
         ),
         //Birthday
-        buildCardRow(context, Icons.cake, "Birthday"),
+        buildCardRow(context, Constants.ICON_BIRTHDAY, "${seiyuu.birthday}"),
         //Blood Type
-        buildCardRow(context, MdiIcons.water, "Blood Type"),
+        buildCardRow(context, Constants.ICON_BLOOD_TYPE, "${seiyuu.bloodType}"),
         //Height
-        buildCardRow(context, MdiIcons.humanMaleHeight, "Height"),
+        buildCardRow(context, Constants.ICON_HEIGHT, "${seiyuu.height} cm"),
         //Agency
-        buildCardRow(context, MdiIcons.briefcase, "Agency"),
+        buildCardRow(context, Constants.ICON_AGENCY, "${seiyuu.agency}"),
       ],
     );
   }
