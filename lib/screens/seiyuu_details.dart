@@ -46,7 +46,7 @@ class _SeiyuuDetailsState extends State<SeiyuuDetails> {
                   buildInfoTile(Constants.ICON_BIRTHDAY, "Birthday",
                       widget.seiyuu.birthday),
                   buildInfoTile(Constants.ICON_BIRTHPLACE, "Birthplace",
-                      widget.seiyuu.birthplace['name']),
+                      widget.seiyuu.birthplace.name),
                   buildInfoTile(
                       Constants
                           .ICONS_ZODIAC["${widget.seiyuu.astrologicalSign}"],

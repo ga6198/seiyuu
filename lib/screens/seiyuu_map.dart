@@ -48,6 +48,8 @@ class _SeiyuuMapState extends State<SeiyuuMap> {
                 if (snapshot.hasData) {
                   List<Seiyuu> seiyuuList = snapshot.data;
 
+                  Set<Marker> seiyuuMarkers = createMarkers(seiyuuList);
+
                   return GoogleMap(
                     mapType: MapType.hybrid,
                     onMapCreated: _onMapCreated,
@@ -55,18 +57,7 @@ class _SeiyuuMapState extends State<SeiyuuMap> {
                       target: Constants.COORDINATES_JAPAN,
                       zoom: 4.5,
                     ),
-                    markers: {
-                      Marker(
-                        markerId: MarkerId("1"),
-                        position: Constants.COORDINATES_JAPAN,
-                        icon: BitmapDescriptor.defaultMarker,
-                      ),
-                      Marker(
-                        markerId: MarkerId("2"),
-                        position: Constants.COORDINATES_JAPAN,
-                        icon: BitmapDescriptor.defaultMarker,
-                      )
-                    },
+                    markers: seiyuuMarkers,
                   );
                 } else {
                   return CustomProgressIndicator();
@@ -77,5 +68,16 @@ class _SeiyuuMapState extends State<SeiyuuMap> {
       ),
       //NOTE: May need to add a single child scroll view
     );
+  }
+
+  Set<Marker> createMarkers(List<Seiyuu> seiyuuList) {
+    Set<Marker> markerSet = Set<Marker>();
+
+    seiyuuList.forEach((seiyuu) {
+      Marker currentMarker = seiyuu.getMarker();
+      markerSet.add(currentMarker);
+    });
+
+    return markerSet;
   }
 }

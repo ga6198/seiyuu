@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:seiyuu/util/birthplace.dart';
 import 'package:seiyuu/util/roles.dart';
 
 class Seiyuu {
   String agency;
   String astrologicalSign;
   String birthday; //DateTime birthday; //Timestamp birthday;
-  Map<String, dynamic>
-      birthplace; //includes location (Geopoint) and name (String)
+  Birthplace
+      birthplace; //Map<String, dynamic> birthplace; //includes location (Geopoint) and name (String)
   String bloodType;
   String gender;
   double height;
@@ -29,12 +31,13 @@ class Seiyuu {
     this.birthday = dateFormat.format(birthdayDate);
 
     if (doc["birthplace"] != null) {
-      this.birthplace =
-          doc["birthplace"]; //includes location (Geopoint) and name (String)
+      //this.birthplace = doc["birthplace"]; //includes location (Geopoint) and name (String)
+      Map<String, dynamic> birthplaceMap = doc["birthplace"];
+      this.birthplace = Birthplace.fromMap(birthplaceMap);
     }
     //Calling map values on a null will break, so set birthplace to a map with no value if no birthplace is in the database
     else {
-      this.birthplace = Map<String, dynamic>();
+      this.birthplace = Birthplace();
     }
 
     this.bloodType = doc["bloodType"];
@@ -58,6 +61,17 @@ class Seiyuu {
 
     print("Initialized Seiyuu object with the following values:");
     printInfo();
+  }
+
+  //create a map marker based on the seiyuu's birthplace location
+  Marker getMarker() {
+    String id = name + "-" + kanjiName + "-" + kanaName;
+
+    return Marker(
+      markerId: MarkerId("$id"),
+      position: birthplace.toLatLng(),
+      icon: BitmapDescriptor.defaultMarker,
+    );
   }
 
   void printInfo() {
