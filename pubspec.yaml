@@ -27,6 +27,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
   getflutter: ^1.0.10
+  google_maps_flutter: ^0.5.24+1
 
   # flutter_shine: ^0.0.5 # beautiful shadows
   material_design_icons_flutter: ^4.0.5045 #custom icons

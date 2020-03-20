@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seiyuu/screens/seiyuu_map.dart';
 import 'package:seiyuu/screens/seiyuu_profiles.dart';
 
 // A navigation drawer that guarantees the drawer will always be in the top left
@@ -21,6 +22,7 @@ class DrawerOnly extends StatelessWidget {
             ),
           ),
           buildPathTile(context, "Seiyuu Profiles", SeiyuuProfiles()),
+          buildPathTile(context, "Seiyuu Birthplace Map", SeiyuuMap()),
           //buildPathTile(context, "Temp", )
         ],
       ),

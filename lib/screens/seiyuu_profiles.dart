@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:seiyuu/screens/seiyuu_details.dart';
 import 'package:seiyuu/util/decoration.dart';
 import 'package:seiyuu/util/seiyuu.dart';
+import 'package:seiyuu/widgets/custom_progress_indicator.dart';
 import 'package:seiyuu/widgets/drawer_only.dart';
 import 'package:seiyuu/widgets/search_bar.dart';
 import 'package:seiyuu/widgets/seiyuu_card.dart';
@@ -44,9 +45,9 @@ class _SeiyuuProfilesState extends State<SeiyuuProfiles> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
-                    return CircularProgressIndicator();
+                    return CustomProgressIndicator();
                   case ConnectionState.waiting:
-                    return CircularProgressIndicator();
+                    return CustomProgressIndicator();
                   default:
                     if (snapshot.hasData) {
                       //retrieved document snapshot list of the seiyuu profiles
@@ -99,7 +100,7 @@ class _SeiyuuProfilesState extends State<SeiyuuProfiles> {
                         ),*/
                       );
                     } else {
-                      return CircularProgressIndicator();
+                      return CustomProgressIndicator();
                     }
                 }
               },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Constants {
@@ -80,6 +81,9 @@ class Constants {
     'Aquarius': MdiIcons.zodiacAquarius,
     'Pisces': MdiIcons.zodiacPisces,
   };
+
+  static final LatLng COORDINATES_JAPAN =
+      const LatLng(36.2048, 138.2529); //Japan coordinates
 
   //--------Image Settings--------//
   //max image width/height

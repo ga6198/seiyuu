@@ -7,6 +7,7 @@ App for seiyuu information.
 - Fun Facts section on details page
 
 ## TODO
+(Done)
 - Need to add image modal for seiyuu pictures. Can use the following pages:
 	- https://pub.dev/packages/photo_view
 	- https://stackoverflow.com/questions/60047676/flutter-display-photo-or-image-as-modal-popup
