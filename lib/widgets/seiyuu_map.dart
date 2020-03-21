@@ -1,13 +1,16 @@
 import 'dart:typed_data';
-
+import 'package:flutter_beautiful_popup/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:seiyuu/screens/seiyuu_details.dart';
 import 'package:seiyuu/util/constants.dart';
 import 'package:seiyuu/util/database.dart';
 import 'package:seiyuu/util/decoration.dart';
 import 'package:seiyuu/util/marker_generator.dart';
 import 'package:seiyuu/util/seiyuu.dart';
+import 'package:seiyuu/widgets/seiyuu_card.dart';
 import 'package:seiyuu/widgets/seiyuu_marker.dart';
 
 class SeiyuuMap extends StatefulWidget {
@@ -97,6 +100,63 @@ class _SeiyuuMapState extends State<SeiyuuMap> {
         position:
             currentSeiyuu.birthplace.toLatLng(), //Constants.COORDINATES_JAPAN,
         icon: icon,
+        onTap: () async {
+          //showDialog(context: context);
+          /*final popup = BeautifulPopup(
+            context: context,
+            template: TemplateGift,
+          );
+          popup.show(
+            title: 'String or Widget',
+            content: 'String or Widget',
+            actions: [
+              popup.button(
+                label: 'Close',
+                onPressed: Navigator.of(context).pop,
+              ),
+            ],
+            // bool barrierDismissible = false,
+            // Widget close,
+          );*/
+
+          /*Alert(
+            context: context,
+            style: alertStyle(),
+            //type: AlertType.info,
+            //title: "RFLUTTER ALERT",
+            //desc: "Flutter is more awesome with RFlutter Alert.",
+            title: "Tap to view more info!",
+            content: SeiyuuCard(seiyuu: currentSeiyuu),
+          ).show();*/
+
+          await showDialog(
+            context: context,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Dialog(
+                  backgroundColor: Colors.transparent,
+                  child: SeiyuuCard(
+                    seiyuu: currentSeiyuu,
+                    onTap: () {
+                      print("Opening Card's Info");
+                      //Move to the seiyuu details page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SeiyuuDetails(
+                            seiyuu: currentSeiyuu,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       );
       tempMarkerSet.add(marker);
     });

@@ -8,6 +8,9 @@ import 'package:seiyuu/widgets/custom_progress_indicator.dart';
 import 'package:seiyuu/widgets/drawer_only.dart';
 import 'package:seiyuu/widgets/seiyuu_map.dart';
 
+//NOTE: Lagginess may occur due to the FutureBuilder.
+//May be best to load everything when the app is first opened
+
 class SeiyuuMapScreen extends StatefulWidget {
   SeiyuuMapScreen({Key key}) : super(key: key);
 

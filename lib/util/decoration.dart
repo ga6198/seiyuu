@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:seiyuu/util/constants.dart';
 
 //utilities for decorations used across the app.
@@ -42,4 +43,23 @@ LinearGradient backgroundGradient() {
       Constants.tertiaryColor,
     ],
   );
+}
+
+//Design for the alerts created with rflutter_alert
+AlertStyle alertStyle() {
+  var alertStyle = AlertStyle(
+    isCloseButton: true,
+    isOverlayTapDismiss: true,
+    backgroundColor: Constants.mainAccent, //Theme.of(context).primaryColor,
+    descStyle: TextStyle(fontWeight: FontWeight.bold),
+    alertBorder: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(Constants.BORDER_RADIUS),
+    ),
+    titleStyle: TextStyle(
+      fontSize: Constants.DIALOG_TITLE_SIZE,
+      fontWeight: FontWeight.w900,
+      //decoration: TextDecoration.underline
+    ),
+  );
+  return alertStyle;
 }

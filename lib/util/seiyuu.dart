@@ -25,7 +25,8 @@ class Seiyuu {
     this.astrologicalSign = doc["astrologicalSign"];
 
     //convert Timestamp to dateTime
-    DateFormat dateFormat = DateFormat.yMMMMd("en_US");
+    DateFormat dateFormat =
+        DateFormat.yMd(); //DateFormat dateFormat = DateFormat.yMMMMd("en_US");
     Timestamp time = doc["birthday"];
     DateTime birthdayDate = DateTime.parse(time.toDate().toString());
     this.birthday = dateFormat.format(birthdayDate);
