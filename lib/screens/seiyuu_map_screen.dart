@@ -6,27 +6,28 @@ import 'package:seiyuu/util/decoration.dart';
 import 'package:seiyuu/util/seiyuu.dart';
 import 'package:seiyuu/widgets/custom_progress_indicator.dart';
 import 'package:seiyuu/widgets/drawer_only.dart';
+import 'package:seiyuu/widgets/seiyuu_map.dart';
 
-class SeiyuuMap extends StatefulWidget {
-  SeiyuuMap({Key key}) : super(key: key);
+class SeiyuuMapScreen extends StatefulWidget {
+  SeiyuuMapScreen({Key key}) : super(key: key);
 
   @override
-  _SeiyuuMapState createState() => _SeiyuuMapState();
+  _SeiyuuMapScreenState createState() => _SeiyuuMapScreenState();
 }
 
-class _SeiyuuMapState extends State<SeiyuuMap> {
-  GoogleMapController mapController;
+class _SeiyuuMapScreenState extends State<SeiyuuMapScreen> {
+  /*GoogleMapController mapController;
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Seiyuu Birthplace Map",
+          "Birthplace Map",
           style: Theme.of(context)
               .textTheme
               .headline4, //Theme.of(context).textTheme.headline6
@@ -50,7 +51,7 @@ class _SeiyuuMapState extends State<SeiyuuMap> {
 
                   Set<Marker> seiyuuMarkers = createMarkers(seiyuuList);
 
-                  return GoogleMap(
+                  /*return GoogleMap(
                     mapType: MapType.hybrid,
                     onMapCreated: _onMapCreated,
                     initialCameraPosition: CameraPosition(
@@ -58,7 +59,10 @@ class _SeiyuuMapState extends State<SeiyuuMap> {
                       zoom: 4.5,
                     ),
                     markers: seiyuuMarkers,
-                  );
+                  );*/
+                  return SeiyuuMap(
+                    seiyuuList: seiyuuList,
+                  ); //Text("temp");
                 } else {
                   return CustomProgressIndicator();
                 }
