@@ -27,4 +27,15 @@ class Database {
 
     return seiyuuList;
   }
+
+  static Future<void> addPageView(String seiyuuId) async {
+    //may not need the await, since the user should not have to wait for this to finish
+    //await
+    Firestore.instance.runTransaction((Transaction tx) {
+      Firestore.instance.collection("pageviews").document().setData({
+        "seiyuuId": "$seiyuuId",
+        "timeViewed": Timestamp.fromDate(DateTime.now()),
+      });
+    });
+  }
 }

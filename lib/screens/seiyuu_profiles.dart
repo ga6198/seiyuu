@@ -80,24 +80,6 @@ class _SeiyuuProfilesState extends State<SeiyuuProfiles> {
                             );
                           },
                         ),
-                        /*ListView(
-                          children: <Widget>[
-                            SeiyuuCard(onTap: () {
-                              print("Opening Card's Info");
-                              //Move to the seiyuu details page
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SeiyuuDetails(
-                                    seiyuuName: "Aimi",
-                                  ),
-                                ),
-                              );
-                            }),
-                            SeiyuuCard(),
-                            //SeiyuuCard(),
-                          ],
-                        ),*/
                       );
                     } else {
                       return CustomProgressIndicator();

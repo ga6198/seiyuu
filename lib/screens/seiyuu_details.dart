@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:seiyuu/util/constants.dart';
+import 'package:seiyuu/util/database.dart';
 import 'package:seiyuu/util/seiyuu.dart';
 import 'package:seiyuu/util/decoration.dart';
 import 'package:seiyuu/widgets/carousel_with_indicator.dart';
@@ -20,6 +22,14 @@ class SeiyuuDetails extends StatefulWidget {
 }
 
 class _SeiyuuDetailsState extends State<SeiyuuDetails> {
+  @override
+  void initState() {
+    super.initState();
+
+    //when the page is first accessed, add a pageview
+    Database.addPageView(widget.seiyuu.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +54,7 @@ class _SeiyuuDetailsState extends State<SeiyuuDetails> {
                   //buttons for favoriting and sharing
                   buildActionButtons(),
                   buildInfoTile(Constants.ICON_BIRTHDAY, "Birthday",
-                      widget.seiyuu.birthday),
+                      "${widget.seiyuu.birthday} (${widget.seiyuu.age} years old)"),
                   buildInfoTile(Constants.ICON_BIRTHPLACE, "Birthplace",
                       widget.seiyuu.birthplace.name),
                   buildInfoTile(

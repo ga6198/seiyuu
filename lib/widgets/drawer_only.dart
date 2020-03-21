@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seiyuu/screens/home.dart';
 import 'package:seiyuu/screens/seiyuu_map_screen.dart';
 import 'package:seiyuu/screens/seiyuu_profiles.dart';
 
@@ -21,6 +22,7 @@ class DrawerOnly extends StatelessWidget {
               color: Theme.of(context).backgroundColor,
             ),
           ),
+          buildPathTile(context, "Home", Home()),
           buildPathTile(context, "Seiyuu Profiles", SeiyuuProfiles()),
           buildPathTile(context, "Seiyuu Birthplace Map", SeiyuuMapScreen()),
           //buildPathTile(context, "Temp", )

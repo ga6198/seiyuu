@@ -5,6 +5,9 @@ import 'package:seiyuu/util/birthplace.dart';
 import 'package:seiyuu/util/roles.dart';
 
 class Seiyuu {
+  String id; //Firestore document id
+
+  int age;
   String agency;
   String astrologicalSign;
   String birthday; //DateTime birthday; //Timestamp birthday;
@@ -21,6 +24,8 @@ class Seiyuu {
   //List<Map<String, dynamic>> roles; //contains a map, which holds "character" (String) and "work" (String)
 
   Seiyuu(DocumentSnapshot doc) {
+    this.id = doc.documentID;
+
     this.agency = doc["agency"];
     this.astrologicalSign = doc["astrologicalSign"];
 
@@ -30,6 +35,7 @@ class Seiyuu {
     Timestamp time = doc["birthday"];
     DateTime birthdayDate = DateTime.parse(time.toDate().toString());
     this.birthday = dateFormat.format(birthdayDate);
+    this.age = calculateAge(birthdayDate);
 
     if (doc["birthplace"] != null) {
       //this.birthplace = doc["birthplace"]; //includes location (Geopoint) and name (String)
@@ -73,6 +79,24 @@ class Seiyuu {
       position: birthplace.toLatLng(),
       icon: BitmapDescriptor.defaultMarker,
     );
+  }
+
+  //get the seiyuu's age by subtracting the current date and the birthdate
+  int calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+    int month1 = currentDate.month;
+    int month2 = birthDate.month;
+    if (month2 > month1) {
+      age--;
+    } else if (month1 == month2) {
+      int day1 = currentDate.day;
+      int day2 = birthDate.day;
+      if (day2 > day1) {
+        age--;
+      }
+    }
+    return age;
   }
 
   void printInfo() {
