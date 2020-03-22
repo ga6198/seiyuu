@@ -6,6 +6,7 @@ import 'package:seiyuu/util/decoration.dart';
 import 'package:seiyuu/util/seiyuu.dart';
 import 'package:seiyuu/widgets/custom_progress_indicator.dart';
 import 'package:seiyuu/widgets/drawer_only.dart';
+import 'package:seiyuu/widgets/primary_card.dart';
 import 'package:seiyuu/widgets/seiyuu_card.dart';
 
 class Home extends StatefulWidget {
@@ -51,60 +52,74 @@ class _HomeState extends State<Home> {
                       width: Constants
                           .CARD_IMAGE_WIDTH, //MediaQuery.of(context).size.width * 0.9,
 
-                      child: StreamBuilder(
-                        stream: Firestore.instance
-                            .collection('seiyuu')
-                            .orderBy('name', descending: false)
-                            .snapshots(),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: 50,
+                            //width: Constants.CARD_WIDTH,
 
-                        //initialData: initialData,
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.none:
-                              return CustomProgressIndicator();
-                            case ConnectionState.waiting:
-                              return CustomProgressIndicator();
-                            default:
-                              if (snapshot.hasData) {
-                                //retrieved document snapshot list of the seiyuu profiles
-                                print("Database data retrieved");
-                                List<DocumentSnapshot> seiyuuProfiles =
-                                    snapshot.data.documents;
-                                return Expanded(
-                                  child: ListView.builder(
-                                    itemCount: seiyuuProfiles.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      //create seiyuu objects that will be passed to the seiyuu cards
-                                      DocumentSnapshot currentSeiyuu =
-                                          seiyuuProfiles[index];
-                                      Seiyuu seiyuu = Seiyuu(currentSeiyuu);
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.only(
+                                topLeft:
+                                    Radius.circular(Constants.BORDER_RADIUS),
+                                topRight:
+                                    Radius.circular(Constants.BORDER_RADIUS),
+                              ),
+                            ),
+                            //Seiyuu Names
+                            child: Center(
+                              child: Text("Popular Pages"),
+                            ),
+                          ),
+                          StreamBuilder(
+                            //Get the 5 seiyuu with the most pageviews
+                            stream: Firestore.instance
+                                .collection('pageviews')
+                                .orderBy('viewCount', descending: true)
+                                .limit(5)
+                                .snapshots(),
 
-                                      return SeiyuuCard(
-                                        seiyuu: seiyuu,
-                                        onTap: () {
-                                          print("Opening Card's Info");
-                                          //Move to the seiyuu details page
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SeiyuuDetails(
-                                                seiyuu: seiyuu,
-                                              ),
-                                            ),
-                                          );
-                                        },
+                            //initialData: initialData,
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.none:
+                                  return CustomProgressIndicator();
+                                case ConnectionState.waiting:
+                                  return CustomProgressIndicator();
+                                default:
+                                  if (snapshot.hasData) {
+                                    //retrieved document snapshot list of the seiyuu profiles
+                                    print("Database data retrieved");
+
+                                    List<DocumentSnapshot> seiyuuViews =
+                                        snapshot.data.documents;
+                                    if (seiyuuViews.length <= 0) {
+                                      return Text("No Documents");
+                                    } else {
+                                      return Expanded(
+                                        child: ListView.builder(
+                                          itemCount: seiyuuViews.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            //create seiyuu objects that will be passed to the seiyuu cards
+                                            DocumentSnapshot currentSeiyuu =
+                                                seiyuuViews[index];
+
+                                            return Text(
+                                                "${currentSeiyuu.documentID}");
+                                          },
+                                        ),
                                       );
-                                    },
-                                  ),
-                                );
-                              } else {
-                                return CustomProgressIndicator();
+                                    }
+                                  } else {
+                                    return CustomProgressIndicator();
+                                  }
                               }
-                          }
-                        },
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ),
