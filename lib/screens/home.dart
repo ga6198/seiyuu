@@ -8,6 +8,7 @@ import 'package:seiyuu/util/seiyuu.dart';
 import 'package:seiyuu/widgets/custom_progress_indicator.dart';
 import 'package:seiyuu/widgets/drawer_only.dart';
 import 'package:seiyuu/widgets/error_display.dart';
+import 'package:seiyuu/widgets/popular_pages_card.dart';
 import 'package:seiyuu/widgets/primary_card.dart';
 import 'package:seiyuu/widgets/seiyuu_card.dart';
 
@@ -38,59 +39,7 @@ class _HomeState extends State<Home> {
           Expanded(
             child: ListView(
               children: <Widget>[
-                PrimaryCard(
-                  headerContent: Center(
-                    child: Text("Popular Pages",
-                        style: Theme.of(context).textTheme.headline5),
-                  ),
-                  bodyContent: StreamBuilder(
-                    //Get the 5 seiyuu with the most pageviews
-                    stream: Firestore.instance
-                        .collection('pageviews')
-                        .orderBy('viewCount', descending: true)
-                        .limit(5)
-                        .snapshots(),
-
-                    //initialData: initialData,
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                          return CustomProgressIndicator();
-                        case ConnectionState.waiting:
-                          return CustomProgressIndicator();
-                        default:
-                          if (snapshot.hasData) {
-                            //retrieved document snapshot list of the seiyuu profiles
-                            print("Database data retrieved");
-
-                            List<DocumentSnapshot> seiyuuViews =
-                                snapshot.data.documents;
-                            if (seiyuuViews.length <= 0) {
-                              return Expanded(
-                                child: ErrorDisplay(message: "Nothing to Show"),
-                              );
-                            } else {
-                              return Expanded(
-                                child: ListView.builder(
-                                  itemCount: seiyuuViews.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    //create seiyuu objects that will be passed to the seiyuu cards
-                                    DocumentSnapshot currentSeiyuu =
-                                        seiyuuViews[index];
-
-                                    return Text("${currentSeiyuu.documentID}");
-                                  },
-                                ),
-                              );
-                            }
-                          } else {
-                            return CustomProgressIndicator();
-                          }
-                      }
-                    },
-                  ),
-                ),
+                PopularPagesCard(),
               ],
             ),
           ),

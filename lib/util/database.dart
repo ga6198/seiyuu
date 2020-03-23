@@ -6,6 +6,17 @@ import 'package:seiyuu/util/seiyuu.dart';
 //do not use when real-time updates are preferred. In that case, use StreamBuilder()
 
 class Database {
+  //retrieve a seiyuu by using values such as the document id
+  static Future<Seiyuu> getSeiyuu({String id}) async {
+    if (id != null) {
+      DocumentSnapshot seiyuuDoc =
+          await Firestore.instance.collection('seiyuu').document(id).get();
+
+      Seiyuu seiyuu = Seiyuu(seiyuuDoc);
+      return seiyuu;
+    }
+  }
+
   //retrieve all seiyuu from the database in a list
   static Future<List<Seiyuu>> getAllSeiyuu() async {
     //NOTE: May need to add orderBy field eventually

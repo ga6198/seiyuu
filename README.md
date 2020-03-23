@@ -4,7 +4,7 @@ App for seiyuu information.
 ## Ideas	
 - Feed. Should it be focused on Instagram and Twitter, or similar to Pinterest?
 - Seiyuu birthplace map (will store birthplace as text, but may need to store another value as a geopoint)
-- Fun Facts section on details page
+- Fun Facts section on details page + voice samples (Can be played by pressing audio symbol) 
 - Home page should just show most viewed pages (+ other stats). Group seiyuu from shortest to tallest and group by birthplace
 
 ## TODO

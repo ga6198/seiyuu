@@ -37,6 +37,14 @@ class Constants {
 
   static const double BORDER_RADIUS = 30;
 
+  //dropdown field
+  static const List<String> DROPDOWN_TIMES = <String>[
+    'Last 7 Days',
+    'Last 30 Days',
+    'Last 365 Days',
+    'All Time'
+  ];
+
   //-------Max numbers for form fields-------//
   //max name length
   static const int MAX_NAME_LENGTH = 50;
