@@ -31,98 +31,56 @@ class _PopularPagesCardState extends State<PopularPagesCard> {
         //mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           //buildHeaderRow(),
-          StreamBuilder(
-            //Get the 5 seiyuu with the most pageviews
-            stream: Firestore.instance
-                .collection('pageviews')
-                .orderBy('viewCount', descending: true)
-                .limit(5)
-                .snapshots(),
 
-            //initialData: initialData,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                  return CustomProgressIndicator();
-                case ConnectionState.waiting:
-                  return CustomProgressIndicator();
-                default:
-                  if (snapshot.hasData) {
-                    //retrieved document snapshot list of the seiyuu profiles
-                    print("Database data retrieved");
+          FutureBuilder(
+              future: getSeiyuuList(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return CustomProgressIndicator();
+                  case ConnectionState.waiting:
+                    return CustomProgressIndicator();
+                  default:
+                    if (snapshot.hasData) {
+                      List<dynamic> seiyuuList = snapshot.data;
 
-                    List<DocumentSnapshot> seiyuuViews =
-                        snapshot.data.documents;
-                    // If there are no documents, show an error message
-                    if (seiyuuViews.length <= 0) {
+                      List<DataRow> seiyuuRows = seiyuuList.map((seiyuuInfo) {
+                        //seiyuuInfo format:
+                        /*
+                        [
+                          [seiyuu1, viewCount1],
+                          [seiyuu2, viewCount2],
+                        ]
+                        */
+
+                        Seiyuu seiyuu = seiyuuInfo[0];
+                        int viewCount = seiyuuInfo[1];
+
+                        return DataRow(
+                          cells: <DataCell>[
+                            DataCell(
+                              Text("${seiyuu.name}"),
+                            ),
+                            DataCell(Text("${viewCount}")),
+                          ],
+                        );
+                      }).toList();
+
+                      //return Text("${seiyuuList[0].name}");
+                      return DataTable(
+                        columns: <DataColumn>[
+                          DataColumn(label: Text('Seiyuu')),
+                          DataColumn(label: Text('Page Views')),
+                        ],
+                        rows: seiyuuRows,
+                      );
+                    } else {
                       return Expanded(
                         child: ErrorDisplay(message: "Nothing to Show"),
                       );
-                    } else {
-                      return FutureBuilder(
-                        future: getSeiyuuList(seiyuuViews),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.none:
-                              return CustomProgressIndicator();
-                            case ConnectionState.waiting:
-                              return CustomProgressIndicator();
-                            default:
-                              if (snapshot.hasData) {
-                                List<Seiyuu> seiyuuList = snapshot.data;
-
-                                List<DataRow> seiyuuRows =
-                                    seiyuuList.map((seiyuu) {
-                                  int index = seiyuuList.indexOf(seiyuu);
-
-                                  return DataRow(
-                                    cells: <DataCell>[
-                                      DataCell(
-                                        Text("${seiyuu.name}"),
-                                      ),
-                                      DataCell(Text(
-                                          "${seiyuuViews[index]['viewCount']}")),
-                                    ],
-                                  );
-                                }).toList();
-
-                                //return Text("${seiyuuList[0].name}");
-                                return DataTable(
-                                  columns: <DataColumn>[
-                                    DataColumn(label: Text('Seiyuu')),
-                                    DataColumn(label: Text('Page Views')),
-                                  ],
-                                  rows: seiyuuRows,
-                                );
-                              } else {
-                                return Expanded(
-                                  child:
-                                      ErrorDisplay(message: "Nothing to Show"),
-                                );
-                              }
-                          }
-                        },
-                      );
-
-                      /*return ListView.builder(
-                        shrinkWrap:
-                            true, //allows listview to be placed inside column without specifying size
-                        itemCount: seiyuuViews.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          //create seiyuu objects that will be passed to the seiyuu cards
-                          DocumentSnapshot currentSeiyuu = seiyuuViews[index];
-
-                          return Text("${currentSeiyuu.documentID}");
-                        },
-                      );*/
                     }
-                  } else {
-                    return CustomProgressIndicator();
-                  }
-              }
-            },
-          ),
+                }
+              }),
         ],
       ),
     );
@@ -182,12 +140,39 @@ class _PopularPagesCardState extends State<PopularPagesCard> {
     );
   }
 
-  Future<List<Seiyuu>> getSeiyuuList(List<DocumentSnapshot> idDocs) async {
+  Future<List<dynamic>> getSeiyuuList() async {
+    QuerySnapshot viewSnapshot = await Firestore.instance
+        .collection('pageviews')
+        .orderBy('viewCount', descending: true)
+        .limit(5)
+        .getDocuments();
+
+    List<DocumentSnapshot> viewDocs = viewSnapshot.documents;
+    List<dynamic> seiyuuList = [];
+    //This code was problematic, since the async was in a callback
+    /*await viewDocs.forEach((doc) async {
+      Seiyuu currentSeiyuu = await Database.getSeiyuu(id: doc.documentID);
+      seiyuuList.add(currentSeiyuu);
+    });*/
+    //This for loop works instead
+    for (DocumentSnapshot doc in viewDocs) {
+      Seiyuu currentSeiyuu = await Database.getSeiyuu(id: doc.documentID);
+
+      //create a list with the seiyuu and the viewCount
+      List seiyuuInfo = [currentSeiyuu, doc['viewCount']];
+
+      seiyuuList.add(seiyuuInfo);
+    }
+
+    return seiyuuList;
+  }
+
+  /*Future<List<Seiyuu>> getSeiyuuList(List<DocumentSnapshot> idDocs) async {
     List<Seiyuu> seiyuuList = [];
     await idDocs.forEach((doc) async {
       Seiyuu currentSeiyuu = await Database.getSeiyuu(id: doc.documentID);
       seiyuuList.add(currentSeiyuu);
     });
     return seiyuuList;
-  }
+  }*/
 }
